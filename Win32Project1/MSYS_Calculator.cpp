@@ -137,19 +137,26 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			0, 0, 200, 25,                                  //x,y, width height
 			hWnd, (HMENU) NULL, NULL, NULL);
 
-		CreateWindow(TEXT("EDIT"), TEXT("Write your input here"),
+		CreateWindow(TEXT("EDIT"), TEXT("Write your x here"),
 			WS_VISIBLE | WS_CHILD,
 			0, 100, 200, 25,
 			hWnd, (HMENU) NULL, NULL, NULL);
 
-		CreateWindow(TEXT("BUTTON"), TEXT("Klik her 1"),
+		CreateWindow(TEXT("EDIT"), TEXT("Write your y here"),
 			WS_VISIBLE | WS_CHILD,
-			200, 100, 100, 25, 
+			0, 130, 200, 25,
 			hWnd, (HMENU)NULL, NULL, NULL);
-		CreateWindow(TEXT("BUTTON"), TEXT("Klik her"),
+
+		CreateWindow(TEXT("BUTTON"), TEXT("Klik her for at få resultatet"),
 			WS_VISIBLE | WS_CHILD,
-			10, 50, 100, 25,
-			hWnd, (HMENU) NULL, NULL, NULL);	
+			200, 100, 200, 25, 
+			hWnd, (HMENU)NULL, NULL, NULL);
+	
+		CreateWindow(TEXT("EDIT"), TEXT("OUTPUT"),
+			WS_VISIBLE | WS_CHILD,
+			450, 100, 200, 25,
+			hWnd, (HMENU)NULL, NULL, NULL);
+
 		break;
 	}
 
