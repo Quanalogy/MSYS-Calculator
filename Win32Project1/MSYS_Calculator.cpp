@@ -3,9 +3,18 @@
 
 #include "stdafx.h"
 #include "MSYS_Calculator.h"
+#include <iostream>
+#include <string>
+#include <atlstr.h>
+#include <Windows.h>
 
 #define MAX_LOADSTRING 100
 
+char szClassName[] = "TextEntry";
+wchar_t textSaved[20];
+HWND textBoxX;
+HWND textBoxY;
+HWND outputBox;
 // Global Variables:
 HINSTANCE hInst;								// current instance
 TCHAR szTitle[MAX_LOADSTRING];					// The title bar text
@@ -137,25 +146,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			0, 0, 200, 25,                                  //x,y, width height
 			hWnd, (HMENU) NULL, NULL, NULL);
 
-		CreateWindow(TEXT("EDIT"), TEXT("Write your x here"),
-			WS_VISIBLE | WS_CHILD,
+		textBoxX = CreateWindow(TEXT("EDIT"), TEXT("Write your x here"), //textBoxX kaldes et handle
+			WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
 			0, 100, 200, 25,
-			hWnd, (HMENU) NULL, NULL, NULL);
+			hWnd, (HMENU) 1000, NULL, NULL);
 
-		CreateWindow(TEXT("EDIT"), TEXT("Write your y here"),
-			WS_VISIBLE | WS_CHILD,
+		textBoxY = CreateWindow(TEXT("EDIT"), TEXT("Write your y here"),
+			WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
 			0, 130, 200, 25,
-			hWnd, (HMENU)NULL, NULL, NULL);
+			hWnd, (HMENU) 1001, NULL, NULL);
 
 		CreateWindow(TEXT("BUTTON"), TEXT("Klik her for at få resultatet"),
 			WS_VISIBLE | WS_CHILD,
 			200, 100, 200, 25, 
-			hWnd, (HMENU)NULL, NULL, NULL);
+			hWnd, (HMENU) 1002, NULL, NULL);
 	
-		CreateWindow(TEXT("EDIT"), TEXT("OUTPUT"),
-			WS_VISIBLE | WS_CHILD,
+		outputBox = CreateWindow(TEXT("EDIT"), TEXT("OUTPUT"),
+			WS_VISIBLE | WS_CHILD | WS_BORDER,
 			450, 100, 200, 25,
-			hWnd, (HMENU)NULL, NULL, NULL);
+			hWnd, (HMENU) 1003, NULL, NULL);
 
 		break;
 	}
@@ -163,6 +172,37 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_COMMAND:
 		wmId    = LOWORD(wParam);
 		wmEvent = HIWORD(wParam);
+		
+
+		switch (LOWORD(wParam))
+		{
+		case 1000:
+			if (wmEvent == 256)
+				SetDlgItemText(hWnd, 1000, L"");
+			break;
+		case 1001:
+			if (wmEvent == 256)
+				SetDlgItemText(hWnd, 1001, L"");
+			break;
+		case 1002: //hvis der er trykket på knappen
+			{
+				bool bSuccess;
+				int tempX, tempY;
+				wchar_t theCalculatedNumber;
+
+				tempY = GetDlgItemInt(hWnd, 1001, NULL, true);
+				tempX = GetDlgItemInt(hWnd, 1000, NULL, true);
+				
+				int res = tempX + tempY;
+
+				SetDlgItemInt(hWnd, 1003, res, true);
+
+
+				
+			}
+			break;
+		}
+
 		// Parse the menu selections:
 		switch (wmId)
 		{
