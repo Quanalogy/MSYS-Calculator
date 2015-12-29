@@ -12,8 +12,7 @@
 
 char szClassName[] = "TextEntry";
 wchar_t textSaved[20];
-HWND textBoxX;
-HWND textBoxY;
+HWND textBoxA, textBoxB, textBoxC, textBoxD;
 HWND outputBox;
 // Global Variables:
 HINSTANCE hInst;								// current instance
@@ -146,25 +145,35 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			0, 0, 200, 25,                                  //x,y, width height
 			hWnd, (HMENU) NULL, NULL, NULL);
 
-		textBoxX = CreateWindow(TEXT("EDIT"), TEXT("Write your x here"), //textBoxX kaldes et handle
+		textBoxA = CreateWindow(TEXT("EDIT"), TEXT("Write your a here"), //textBoxX kaldes et handle
 			WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
 			0, 100, 200, 25,
 			hWnd, (HMENU) 1000, NULL, NULL);
 
-		textBoxY = CreateWindow(TEXT("EDIT"), TEXT("Write your y here"),
+		textBoxB = CreateWindow(TEXT("EDIT"), TEXT("Write your b here"),
 			WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
 			0, 130, 200, 25,
 			hWnd, (HMENU) 1001, NULL, NULL);
 
+		textBoxC = CreateWindow(TEXT("EDIT"), TEXT("Write your c here"),
+			WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER, 
+			0, 160, 200, 25,
+			hWnd, (HMENU)1002, NULL, NULL);
+
+		textBoxD = CreateWindow(TEXT("EDIT"), TEXT("Write your d here"),
+			WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
+			0, 190, 200, 25,
+			hWnd, (HMENU)1003, NULL, NULL);
+
 		CreateWindow(TEXT("BUTTON"), TEXT("Klik her for at få resultatet"),
 			WS_VISIBLE | WS_CHILD,
 			200, 100, 200, 25, 
-			hWnd, (HMENU) 1002, NULL, NULL);
+			hWnd, (HMENU) 1004, NULL, NULL);
 	
 		outputBox = CreateWindow(TEXT("EDIT"), TEXT("OUTPUT"),
 			WS_VISIBLE | WS_CHILD | WS_BORDER,
 			450, 100, 200, 25,
-			hWnd, (HMENU) 1003, NULL, NULL);
+			hWnd, (HMENU) 1005, NULL, NULL);
 
 		break;
 	}
@@ -184,18 +193,31 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			if (wmEvent == 256)
 				SetDlgItemText(hWnd, 1001, L"");
 			break;
-		case 1002: //hvis der er trykket på knappen
+
+		case 1002:
+			if (wmEvent == 256)
+				SetDlgItemText(hWnd, 1002, L"");
+			break;
+
+		case 1003:
+			if (wmEvent == 256)
+				SetDlgItemText(hWnd, 1003, L"");
+			break;
+
+		case 1004: //hvis der er trykket på knappen
 			{
 				bool bSuccess;
-				int tempX, tempY;
+				int tempA, tempB, tempC, tempD;
 				wchar_t theCalculatedNumber;
 
-				tempY = GetDlgItemInt(hWnd, 1001, NULL, true);
-				tempX = GetDlgItemInt(hWnd, 1000, NULL, true);
-				
-				int res = tempX + tempY;
+				tempA = GetDlgItemInt(hWnd, 1000, NULL, true);
+				tempB = GetDlgItemInt(hWnd, 1001, NULL, true);
+				tempC = GetDlgItemInt(hWnd, 1002, NULL, true);
+				tempD = GetDlgItemInt(hWnd, 1003, NULL, true);
 
-				SetDlgItemInt(hWnd, 1003, res, true);
+				int res = tempA + tempB + tempC + tempD;
+
+				SetDlgItemInt(hWnd, 1005, res, true);
 
 
 				
