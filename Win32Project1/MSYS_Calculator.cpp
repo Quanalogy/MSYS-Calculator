@@ -9,10 +9,16 @@
 #include <Windows.h>
 
 #define MAX_LOADSTRING 100
+#define maxForTimerID 1000
+#define cpuFreqID 1001
+#define delayPrescalerID 1002
+#define delayID 1003
+#define resultButtonID 1004
+#define outputID 1005
 
 char szClassName[] = "TextEntry";
 wchar_t textSaved[20];
-HWND textBoxA, textBoxB, textBoxC, textBoxD;
+HWND maxForTimerBox, cpuFreqBox, delayPrescalerBox, delayBox;
 HWND outputBox;
 // Global Variables:
 HINSTANCE hInst;								// current instance
@@ -145,35 +151,35 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			0, 0, 200, 25,                                  //x,y, width height
 			hWnd, (HMENU) NULL, NULL, NULL);
 
-		textBoxA = CreateWindow(TEXT("EDIT"), TEXT("Write your a here"), //textBoxX kaldes et handle
+		maxForTimerBox = CreateWindow(TEXT("EDIT"), TEXT("Write your Max for the timer"), //textBoxX kaldes et handle
 			WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
 			0, 100, 200, 25,
-			hWnd, (HMENU) 1000, NULL, NULL);
+			hWnd, (HMENU) maxForTimerID, NULL, NULL);
 
-		textBoxB = CreateWindow(TEXT("EDIT"), TEXT("Write your b here"),
+		cpuFreqBox = CreateWindow(TEXT("EDIT"), TEXT("Write your CpuFreq"),
 			WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
 			0, 130, 200, 25,
-			hWnd, (HMENU) 1001, NULL, NULL);
+			hWnd, (HMENU) cpuFreqID, NULL, NULL);
 
-		textBoxC = CreateWindow(TEXT("EDIT"), TEXT("Write your c here"),
+		delayPrescalerBox = CreateWindow(TEXT("EDIT"), TEXT("Write your Prescaler delay"),
 			WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER, 
 			0, 160, 200, 25,
-			hWnd, (HMENU)1002, NULL, NULL);
+			hWnd, (HMENU) delayPrescalerID, NULL, NULL);
 
-		textBoxD = CreateWindow(TEXT("EDIT"), TEXT("Write your d here"),
+		delayBox = CreateWindow(TEXT("EDIT"), TEXT("Write your delay"),
 			WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
 			0, 190, 200, 25,
-			hWnd, (HMENU)1003, NULL, NULL);
+			hWnd, (HMENU) delayID, NULL, NULL);
 
 		CreateWindow(TEXT("BUTTON"), TEXT("Klik her for at få resultatet"),
 			WS_VISIBLE | WS_CHILD,
 			200, 100, 200, 25, 
-			hWnd, (HMENU) 1004, NULL, NULL);
+			hWnd, (HMENU) resultButtonID, NULL, NULL);
 	
 		outputBox = CreateWindow(TEXT("EDIT"), TEXT("OUTPUT"),
 			WS_VISIBLE | WS_CHILD | WS_BORDER,
 			450, 100, 200, 25,
-			hWnd, (HMENU) 1005, NULL, NULL);
+			hWnd, (HMENU) outputID, NULL, NULL);
 
 		break;
 	}
@@ -185,39 +191,39 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		switch (LOWORD(wParam))
 		{
-		case 1000:
+		case maxForTimerID:
 			if (wmEvent == 256)
-				SetDlgItemText(hWnd, 1000, L"");
+				SetDlgItemText(hWnd, maxForTimerID, L"");
 			break;
-		case 1001:
+		case cpuFreqID:
 			if (wmEvent == 256)
-				SetDlgItemText(hWnd, 1001, L"");
-			break;
-
-		case 1002:
-			if (wmEvent == 256)
-				SetDlgItemText(hWnd, 1002, L"");
+				SetDlgItemText(hWnd, cpuFreqID, L"");
 			break;
 
-		case 1003:
+		case delayPrescalerID:
 			if (wmEvent == 256)
-				SetDlgItemText(hWnd, 1003, L"");
+				SetDlgItemText(hWnd, delayPrescalerID, L"");
 			break;
 
-		case 1004: //hvis der er trykket på knappen
+		case delayID:
+			if (wmEvent == 256)
+				SetDlgItemText(hWnd, delayID, L"");
+			break;
+
+		case resultButtonID: //hvis der er trykket på knappen
 			{
 				bool bSuccess;
-				int tempA, tempB, tempC, tempD;
+				int maxForTimer, cpuFreq, delayPrescaler, delay;
 				wchar_t theCalculatedNumber;
 
-				tempA = GetDlgItemInt(hWnd, 1000, NULL, true);
-				tempB = GetDlgItemInt(hWnd, 1001, NULL, true);
-				tempC = GetDlgItemInt(hWnd, 1002, NULL, true);
-				tempD = GetDlgItemInt(hWnd, 1003, NULL, true);
+				maxForTimer = GetDlgItemInt(hWnd, maxForTimerID, NULL, true);
+				cpuFreq = GetDlgItemInt(hWnd, cpuFreqID, NULL, true);
+				delayPrescaler = GetDlgItemInt(hWnd, delayPrescalerID, NULL, true);
+				delay = GetDlgItemInt(hWnd, delayID, NULL, true);
 
-				int res = tempA + tempB + tempC + tempD;
+				int resX = (maxForTimer + 1) - (cpuFreq*delay) / delayPrescaler;
 
-				SetDlgItemInt(hWnd, 1005, res, true);
+				SetDlgItemInt(hWnd, outputID, resX, true);
 
 
 				
