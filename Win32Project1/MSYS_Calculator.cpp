@@ -168,9 +168,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			0, 0, 200, 25,                                  //x,y, width height
 			hWnd, (HMENU) NULL, NULL, NULL);
 
-<<<<<<< HEAD
+
 		maxForTimerBox = CreateWindow(TEXT("EDIT"), TEXT(""), //textBoxX kaldes et handle
-=======
+			WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
+			100, 100, 130, 25,
+			hWnd, (HMENU)maxForTimerID, NULL, NULL);
 		// sæt 1
 		CreateWindow(TEXT("STATIC"), TEXT("CpuFrek (int)"),
 			WS_VISIBLE | WS_CHILD,
@@ -178,14 +180,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			hWnd, (HMENU)NULL, NULL, NULL);
 
 		cpuFreqBox = CreateWindow(TEXT("EDIT"), TEXT("Skriv CpuFrek"),
->>>>>>> c7190485ba0288ff809dc8ea542d73bbe1242f47
 			WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
 			0, 100, 100, 25,
 			hWnd, (HMENU)cpuFreqID, NULL, NULL);
 
-<<<<<<< HEAD
+
 		cpuFreqBox = CreateWindow(TEXT("EDIT"), TEXT(""),
-=======
+			WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
+			0, 100, 100, 25,
+			hWnd, (HMENU) cpuFreqID, NULL, NULL);
 		// sæt 2
 		CreateWindow(TEXT("STATIC"), TEXT("Max timer (int)"), 
 			WS_VISIBLE | WS_CHILD,                            
@@ -193,14 +196,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			hWnd, (HMENU)NULL, NULL, NULL);
 
 		maxForTimerBox = CreateWindow(TEXT("EDIT"), TEXT("Skriv Max for timer"), //textBoxX kaldes et handle
->>>>>>> c7190485ba0288ff809dc8ea542d73bbe1242f47
+
 			WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
 			100, 100, 130, 25,
 			hWnd, (HMENU) maxForTimerID, NULL, NULL);
 
-<<<<<<< HEAD
+
 		delayPrescalerBox = CreateWindow(TEXT("EDIT"), TEXT(""),
-=======
+			WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
+			230, 100, 150, 25,
+			hWnd, (HMENU) delayPrescalerID, NULL, NULL);
+
 		//sæt 3
 		CreateWindow(TEXT("STATIC"), TEXT("Prescaler delay (int)"),
 			WS_VISIBLE | WS_CHILD,
@@ -208,19 +214,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			hWnd, (HMENU)NULL, NULL, NULL);
 
 		delayPrescalerBox = CreateWindow(TEXT("EDIT"), TEXT("Skriv Prescaler delay"),
->>>>>>> c7190485ba0288ff809dc8ea542d73bbe1242f47
 			WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER, 
 			230, 100, 150, 25,
 			hWnd, (HMENU) delayPrescalerID, NULL, NULL);
 
-<<<<<<< HEAD
 		delayBox = CreateWindow(TEXT("EDIT"), TEXT(""),
 			WS_VISIBLE | WS_CHILD | WS_BORDER,
 			0, 190, 200, 25,
 			hWnd, (HMENU) delayID, NULL, NULL);
 
 		CreateWindow(TEXT("BUTTON"), TEXT(buttonText),
-=======
+			WS_VISIBLE | WS_CHILD,
+			510, 70, 150, 55,
+			hWnd, (HMENU) resultButtonID, NULL, NULL);
+
 
 		//sæt 4
 		CreateWindow(TEXT("STATIC"), TEXT("Delay (float)"),
@@ -236,14 +243,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		
 		// knap, har ingen titel.
 		CreateWindow(TEXT("BUTTON"), TEXT("Klik for resultat"),
->>>>>>> c7190485ba0288ff809dc8ea542d73bbe1242f47
 			WS_VISIBLE | WS_CHILD,
 			460+50, 70, 150, 55, 
 			hWnd, (HMENU) resultButtonID, NULL, NULL);
-<<<<<<< HEAD
 	
 		outputBox = CreateWindow(TEXT("EDIT"), TEXT(""),
-=======
+			WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
+			810, 85, 70, 25,
+			hWnd, (HMENU) outputID, NULL, NULL);
 
 		// resultatblok.
 		CreateWindow(TEXT("STATIC"), TEXT("Resultat (int)"),
@@ -253,7 +260,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 
 		outputBox = CreateWindow(TEXT("EDIT"), TEXT(" Resultat"),
->>>>>>> c7190485ba0288ff809dc8ea542d73bbe1242f47
 			WS_VISIBLE | WS_CHILD | WS_BORDER,
 			610+200, 85, 70, 25,
 			hWnd, (HMENU) outputID, NULL, NULL);
@@ -262,37 +268,63 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		//start på udregning af BAUD RATE
 		CreateWindow(TEXT("STATIC"), TEXT("Udregning af BAUD Rate"),
 			WS_VISIBLE | WS_CHILD,
-			500, 160, 200, 25,
+			0, 160, 200, 25,
 			hWnd, (HMENU) NULL, NULL, NULL);
 		
+		//CPU FREQ
+		CreateWindow(TEXT("STATIC"), TEXT("Frekvens for CPU"),
+			WS_VISIBLE | WS_BORDER,
+			0, 190, 150, 25,
+			hWnd, (HMENU)NULL, NULL, NULL);
+
 		FOSCBox = CreateWindow(TEXT("EDIT"), TEXT(""),
 			WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
-			0, 190, 150, 25,
+			0, 220, 150, 25,
 			hWnd, (HMENU) FOSCID, NULL, NULL);
+
+		//UBRR
+		CreateWindow(TEXT("STATIC"), TEXT("UBRR"),
+			WS_VISIBLE | WS_BORDER,
+			150, 190, 100, 25,
+			hWnd, (HMENU)NULL, NULL, NULL);
 
 		UBRRBox = CreateWindow(TEXT("EDIT"), TEXT(""),
 			WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
-			150, 190, 100, 25,
+			150, 220, 100, 25,
 			hWnd, (HMENU) UBRRID, NULL, NULL);
 
+
+
+
+		//UBRRL
+		CreateWindow(TEXT("STATIC"), TEXT("UBRRL"),
+			WS_VISIBLE | WS_BORDER,
+			250, 190, 100, 25,
+			hWnd, (HMENU)NULL, NULL, NULL);
 		UBRRLBox = CreateWindow(TEXT("EDIT"), TEXT(""),
 			WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
-			250, 190, 100, 25,
+			250, 220, 100, 25,
 			hWnd, (HMENU) UBRRLID, NULL, NULL);
 
+		//UBRRH
+		CreateWindow(TEXT("STATIC"), TEXT("UBRRH"),
+			WS_VISIBLE | WS_BORDER,
+			350, 190, 100, 25,
+			hWnd, (HMENU)NULL, NULL, NULL);
 		UBRRHBox = CreateWindow(TEXT("EDIT"), TEXT(""),
 			WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
-			350, 190, 100, 25,
+			350, 220, 100, 25,
 			hWnd, (HMENU) UBRRHID, NULL, NULL);
 
+		//Button no text
 		CreateWindow(TEXT("BUTTON"), TEXT(buttonText),
 			WS_VISIBLE | WS_CHILD,
-			510, 190, 150, 55,
+			510, 220, 150, 55,
 			hWnd, (HMENU) BAUDResultButtonID, NULL, NULL);
-
-		BAUDBox = CreateWindow(TEXT("EDIT"), TEXT(""),
+		//Result is already there
+		BAUDBox = CreateWindow(TEXT("EDIT"), TEXT("Resultat"),
 			WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
-			810, 190, 100, 25,
+			810, 220, 100, 25,
 			hWnd, (HMENU) BAUDID, NULL, NULL);
 
 
@@ -328,38 +360,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case resultButtonID: //hvis der er trykket på knappen
 			{
-				bool bSuccess;
-<<<<<<< HEAD
+
 				int maxForTimer, cpuFreq, delayPrescaler, delay;
-				wchar_t delayString;
-=======
-				int maxForTimer, cpuFreq, delayPrescaler;
-				string delayInput;
-				wchar_t theCalculatedNumber;
->>>>>>> c7190485ba0288ff809dc8ea542d73bbe1242f47
 
 				maxForTimer = GetDlgItemInt(hWnd, maxForTimerID, NULL, true);
 				cpuFreq = GetDlgItemInt(hWnd, cpuFreqID, NULL, true);
 				delayPrescaler = GetDlgItemInt(hWnd, delayPrescalerID, NULL, true);
-<<<<<<< HEAD
 				delay = GetDlgItemInt(hWnd, delayID, NULL, true);
-				
-				
-				delayString = GetDlgItemText(hWnd, delayID, NULL, 32);
-
-=======
-				delayInput =  GetDlgItemInt(hWnd, delayID, NULL, true);
-
-				float delay = stof(delayInput,NULL);
-
-				int resX = (int) ceil((maxForTimer + 1) - (cpuFreq*delay) / (int)delayPrescaler);
->>>>>>> c7190485ba0288ff809dc8ea542d73bbe1242f47
-
 
 				float resX = (float) ((maxForTimer + 1) - (cpuFreq*delay)) / delayPrescaler;
-				//float testfloat = (float)1/2;
 
 				std::wostringstream woss;
+
 				woss << resX;
 				std::wstring ws = woss.str();
 				const wchar_t* outputFl = ws.c_str();
@@ -383,9 +395,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			UBRRL = GetDlgItemInt(hWnd, UBRRLID, NULL, true);
 			UBRR = (256 * UBRRH) + UBRRL;
 
-			BAUD = (FOSC) / (16 * (UBRR + 1));
+			BAUD = (float)((FOSC) / (16 * (UBRR + 1)));
 
+			std::wostringstream woss;
+			woss << BAUD;
+			std::wstring ws = woss.str();
+			const wchar_t* outputFl = ws.c_str();
+			std::vector<wchar_t> buf(outputFl, outputFl + (ws.size() + 1));
+			wchar_t *outputFloat = &buf[0];
 
+			SetDlgItemText(hWnd, BAUDID, outputFloat);
 
 			break;
 		}
