@@ -10,6 +10,8 @@
 #include <sstream>
 #include <vector>
 
+using namespace std;
+
 #define MAX_LOADSTRING 100
 #define maxForTimerID 1000
 #define cpuFreqID 1001
@@ -159,39 +161,101 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	switch (message)
 	{
 	case WM_CREATE:{
+
+		//titel
 		CreateWindow(TEXT("STATIC"), TEXT("MSYS Calculator"), // Static er tekst, det næste er beskeden
 			WS_VISIBLE | WS_CHILD,                            //
 			0, 0, 200, 25,                                  //x,y, width height
 			hWnd, (HMENU) NULL, NULL, NULL);
 
+<<<<<<< HEAD
 		maxForTimerBox = CreateWindow(TEXT("EDIT"), TEXT(""), //textBoxX kaldes et handle
+=======
+		// sæt 1
+		CreateWindow(TEXT("STATIC"), TEXT("CpuFrek (int)"),
+			WS_VISIBLE | WS_CHILD,
+			0, 70, 100, 25,
+			hWnd, (HMENU)NULL, NULL, NULL);
+
+		cpuFreqBox = CreateWindow(TEXT("EDIT"), TEXT("Skriv CpuFrek"),
+>>>>>>> c7190485ba0288ff809dc8ea542d73bbe1242f47
 			WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
-			0, 100, 200, 25,
+			0, 100, 100, 25,
+			hWnd, (HMENU)cpuFreqID, NULL, NULL);
+
+<<<<<<< HEAD
+		cpuFreqBox = CreateWindow(TEXT("EDIT"), TEXT(""),
+=======
+		// sæt 2
+		CreateWindow(TEXT("STATIC"), TEXT("Max timer (int)"), 
+			WS_VISIBLE | WS_CHILD,                            
+			100, 70, 130, 25,                                 
+			hWnd, (HMENU)NULL, NULL, NULL);
+
+		maxForTimerBox = CreateWindow(TEXT("EDIT"), TEXT("Skriv Max for timer"), //textBoxX kaldes et handle
+>>>>>>> c7190485ba0288ff809dc8ea542d73bbe1242f47
+			WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
+			100, 100, 130, 25,
 			hWnd, (HMENU) maxForTimerID, NULL, NULL);
 
-		cpuFreqBox = CreateWindow(TEXT("EDIT"), TEXT(""),
-			WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
-			0, 130, 200, 25,
-			hWnd, (HMENU) cpuFreqID, NULL, NULL);
-
+<<<<<<< HEAD
 		delayPrescalerBox = CreateWindow(TEXT("EDIT"), TEXT(""),
+=======
+		//sæt 3
+		CreateWindow(TEXT("STATIC"), TEXT("Prescaler delay (int)"),
+			WS_VISIBLE | WS_CHILD,
+			230, 70, 150, 25,
+			hWnd, (HMENU)NULL, NULL, NULL);
+
+		delayPrescalerBox = CreateWindow(TEXT("EDIT"), TEXT("Skriv Prescaler delay"),
+>>>>>>> c7190485ba0288ff809dc8ea542d73bbe1242f47
 			WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER, 
-			0, 160, 200, 25,
+			230, 100, 150, 25,
 			hWnd, (HMENU) delayPrescalerID, NULL, NULL);
 
+<<<<<<< HEAD
 		delayBox = CreateWindow(TEXT("EDIT"), TEXT(""),
 			WS_VISIBLE | WS_CHILD | WS_BORDER,
 			0, 190, 200, 25,
 			hWnd, (HMENU) delayID, NULL, NULL);
 
 		CreateWindow(TEXT("BUTTON"), TEXT(buttonText),
+=======
+
+		//sæt 4
+		CreateWindow(TEXT("STATIC"), TEXT("Delay (float)"),
 			WS_VISIBLE | WS_CHILD,
-			200, 100, 200, 25, 
+			380, 70, 80, 25,
+			hWnd, (HMENU)NULL, NULL, NULL);
+
+		delayBox = CreateWindow(TEXT("EDIT"), TEXT("Skriv delay"),
+			WS_VISIBLE | WS_CHILD | WS_BORDER,
+			380, 100, 80, 25,
+			hWnd, (HMENU) delayID, NULL, NULL);
+
+		
+		// knap, har ingen titel.
+		CreateWindow(TEXT("BUTTON"), TEXT("Klik for resultat"),
+>>>>>>> c7190485ba0288ff809dc8ea542d73bbe1242f47
+			WS_VISIBLE | WS_CHILD,
+			460+50, 70, 150, 55, 
 			hWnd, (HMENU) resultButtonID, NULL, NULL);
+<<<<<<< HEAD
 	
 		outputBox = CreateWindow(TEXT("EDIT"), TEXT(""),
+=======
+
+		// resultatblok.
+		CreateWindow(TEXT("STATIC"), TEXT("Resultat (int)"),
+			WS_VISIBLE | WS_CHILD,
+			610 + 200, 0, 690, 1000,
+			hWnd, (HMENU)NULL, NULL, NULL);
+
+
+		outputBox = CreateWindow(TEXT("EDIT"), TEXT(" Resultat"),
+>>>>>>> c7190485ba0288ff809dc8ea542d73bbe1242f47
 			WS_VISIBLE | WS_CHILD | WS_BORDER,
-			450, 100, 200, 25,
+			610+200, 85, 70, 25,
 			hWnd, (HMENU) outputID, NULL, NULL);
 
 
@@ -265,17 +329,31 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case resultButtonID: //hvis der er trykket på knappen
 			{
 				bool bSuccess;
+<<<<<<< HEAD
 				int maxForTimer, cpuFreq, delayPrescaler, delay;
 				wchar_t delayString;
+=======
+				int maxForTimer, cpuFreq, delayPrescaler;
+				string delayInput;
+				wchar_t theCalculatedNumber;
+>>>>>>> c7190485ba0288ff809dc8ea542d73bbe1242f47
 
 				maxForTimer = GetDlgItemInt(hWnd, maxForTimerID, NULL, true);
 				cpuFreq = GetDlgItemInt(hWnd, cpuFreqID, NULL, true);
 				delayPrescaler = GetDlgItemInt(hWnd, delayPrescalerID, NULL, true);
+<<<<<<< HEAD
 				delay = GetDlgItemInt(hWnd, delayID, NULL, true);
 				
 				
 				delayString = GetDlgItemText(hWnd, delayID, NULL, 32);
 
+=======
+				delayInput =  GetDlgItemInt(hWnd, delayID, NULL, true);
+
+				float delay = stof(delayInput,NULL);
+
+				int resX = (int) ceil((maxForTimer + 1) - (cpuFreq*delay) / (int)delayPrescaler);
+>>>>>>> c7190485ba0288ff809dc8ea542d73bbe1242f47
 
 
 				float resX = (float) ((maxForTimer + 1) - (cpuFreq*delay)) / delayPrescaler;
