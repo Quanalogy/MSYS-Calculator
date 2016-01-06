@@ -370,16 +370,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		case BAUDResultButtonID:
 		{
-			int FOSC, UBRR, UBRRL, UBRRH, UBRRLLength, UBRRHLength;
+			int FOSC, UBRR, UBRRL, UBRRH, UBRRLLength, UBRRHLength, FOSCLength;
 			float BAUD;
 
 			FOSC = GetDlgItemInt(hWnd, FOSCID, NULL, true);
 
+			// Get the length of the editboxes to see if they are empty
 			UBRRHLength = SendMessage(UBRRHBox, WM_GETTEXTLENGTH, 0, 0);
 			UBRRLLength = SendMessage(UBRRLBox, WM_GETTEXTLENGTH, 0, 0);
+			FOSCLength = SendMessage(FOSCBox, WM_GETTEXTLENGTH, 0, 0);
 
+
+			//are they empty ?
 			if (UBRRHLength == 0 || UBRRLLength == 0){
-				MessageBox(0,L"Please enter UBRRH and UBRRL, or the value of UBRR to calculate",0,0);
+				MessageBox(0,L"Indtast UBRRH og UBRRL eller værdien for UBRR",0,0);
+				break;
+			} 
+			// continued
+			if (FOSCLength == 0){
+				MessageBox(0, L"Indtast frekvensen!", 0, 0);
 				break;
 			}
 
