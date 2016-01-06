@@ -370,13 +370,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		case BAUDResultButtonID:
 		{
-			int FOSC, UBRR, UBRRL, UBRRH;
+			int FOSC, UBRR, UBRRL, UBRRH, UBRRLLength, UBRRHLength;
 			float BAUD;
 
 			FOSC = GetDlgItemInt(hWnd, FOSCID, NULL, true);
+
+			UBRRHLength = SendMessage(UBRRHBox, WM_GETTEXTLENGTH, 0, 0);
+			UBRRLLength = SendMessage(UBRRLBox, WM_GETTEXTLENGTH, 0, 0);
+
+			if (UBRRHLength == 0 || UBRRLLength == 0){
+				MessageBox(0,L"Please enter UBRRH and UBRRL, or the value of UBRR to calculate",0,0);
+				break;
+			}
+
 			UBRRH = GetDlgItemInt(hWnd, UBRRHID, NULL, true);
 			UBRRL = GetDlgItemInt(hWnd, UBRRLID, NULL, true);
 			UBRR = (256 * UBRRH) + UBRRL;
+			SetDlgItemInt(hWnd, UBRRID, UBRR, true);
 
 			BAUD = (float)((FOSC) / (16 * (UBRR + 1)));
 
