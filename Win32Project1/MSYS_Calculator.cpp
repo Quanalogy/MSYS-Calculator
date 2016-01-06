@@ -42,8 +42,9 @@ INT_PTR CALLBACK	About(HWND, UINT, WPARAM, LPARAM);
 
 using namespace std;
 
-
+//strings
 #define buttonText "Klik For Resultat"
+#define resultText "Resultatet"
 
 
 int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
@@ -175,7 +176,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			hWnd, (HMENU)maxForTimerID, NULL, NULL);
 		// sæt 1
 		CreateWindow(TEXT("STATIC"), TEXT("CpuFrek (int)"),
-			WS_VISIBLE | WS_CHILD,
+			WS_VISIBLE | WS_CHILD | SS_CENTER,
 			0, 70, 100, 25,
 			hWnd, (HMENU)NULL, NULL, NULL);
 
@@ -186,7 +187,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		// sæt 2
 		CreateWindow(TEXT("STATIC"), TEXT("Max timer (int)"),
-			WS_VISIBLE | WS_CHILD,
+			WS_VISIBLE | WS_CHILD | SS_CENTER,
 			100, 70, 130, 25,
 			hWnd, (HMENU)NULL, NULL, NULL);
 
@@ -198,7 +199,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		//sæt 3
 		CreateWindow(TEXT("STATIC"), TEXT("Prescaler delay (int)"),
-			WS_VISIBLE | WS_CHILD,
+			WS_VISIBLE | WS_CHILD | SS_CENTER,
 			230, 70, 150, 25,
 			hWnd, (HMENU)NULL, NULL, NULL);
 
@@ -210,7 +211,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		//sæt 4
 		CreateWindow(TEXT("STATIC"), TEXT("Delay (float)"),
-			WS_VISIBLE | WS_CHILD,
+			WS_VISIBLE | WS_CHILD | SS_CENTER,
 			380, 70, 80, 25,
 			hWnd, (HMENU)NULL, NULL, NULL);
 
@@ -221,7 +222,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 
 		// knap, har ingen titel.
-		CreateWindow(TEXT("BUTTON"), TEXT("Klik for resultat"),
+		CreateWindow(TEXT("BUTTON"), TEXT(buttonText),
 			WS_VISIBLE | WS_CHILD,
 			460 + 50, 70, 150, 55,
 			hWnd, (HMENU)resultButtonID, NULL, NULL);
@@ -238,21 +239,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			hWnd, (HMENU)NULL, NULL, NULL);
 
 
-		outputBox = CreateWindow(TEXT("EDIT"), TEXT(" Resultat"),
+		outputBox = CreateWindow(TEXT("EDIT"), TEXT(resultText),
 			WS_VISIBLE | WS_CHILD | WS_BORDER,
 			610 + 200, 85, 70, 25,
 			hWnd, (HMENU)outputID, NULL, NULL);
 
 
-		//start på udregning af baud rate
-		CreateWindow(TEXT("static"), TEXT("udregning af baud rate"),
-			WS_VISIBLE | WS_CHILD,
+//start på udregning af baud rate
+		CreateWindow(TEXT("static"), TEXT("Udregning af BAUD rate"),
+			WS_VISIBLE | WS_CHILD | SS_CENTER,
 			0, 160, 200, 25,
 			hWnd, (HMENU) NULL, NULL, NULL);
 		
 		//cpu freq
-		CreateWindow(TEXT("static"), TEXT("frekvens for cpu"),
-			WS_VISIBLE | WS_BORDER,
+		CreateWindow(TEXT("static"), TEXT("Frekvens for CPU"),
+			WS_VISIBLE | WS_CHILD | SS_CENTER,
 			0, 200, 150, 25,
 			hWnd, (HMENU)NULL, NULL, NULL);
 
@@ -262,8 +263,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			hWnd, (HMENU)FOSCID, NULL, NULL);
 
 		//ubrr
-		CreateWindow(TEXT("static"), TEXT("ubrr"),
-			WS_VISIBLE | WS_BORDER,
+		CreateWindow(TEXT("static"), TEXT("UBRR"),
+			WS_VISIBLE | WS_CHILD | SS_CENTER,
 			150, 200, 100, 25,
 			hWnd, (HMENU)NULL, NULL, NULL);
 
@@ -276,32 +277,35 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 
 		//ubrrl
-		CreateWindow(TEXT("static"), TEXT("ubrrl"),
-			WS_VISIBLE | WS_BORDER,
+		CreateWindow(TEXT("static"), TEXT("UBRRL"),
+			WS_VISIBLE | WS_CHILD | SS_CENTER,
 			250, 200, 100, 25,
 			hWnd, (HMENU)NULL, NULL, NULL);
+
 		UBRRLBox = CreateWindow(TEXT("edit"), TEXT(""),
 			WS_VISIBLE | WS_BORDER | WS_CHILD | ES_NUMBER,
 			250, 230, 100, 25,
 			hWnd, (HMENU)UBRRLID, NULL, NULL);
 
 		//ubrrh
-		CreateWindow(TEXT("static"), TEXT("ubrrh"),
-			WS_VISIBLE | WS_BORDER,
+		CreateWindow(TEXT("static"), TEXT("UBRRH"),
+			WS_VISIBLE | WS_CHILD | SS_CENTER,
 			350, 200, 100, 25,
 			hWnd, (HMENU)NULL, NULL, NULL);
+
 		UBRRHBox = CreateWindow(TEXT("edit"), TEXT(""),
 			WS_VISIBLE | WS_BORDER | WS_CHILD | ES_NUMBER,
 			350, 230, 100, 25,
 			hWnd, (HMENU)UBRRHID, NULL, NULL);
 
 		//button no text
-		CreateWindow(TEXT("button"), TEXT(buttonText),
-			WS_VISIBLE | WS_BORDER,
+		CreateWindow(TEXT("BUTTON"), TEXT(buttonText),
+			WS_VISIBLE | WS_CHILD,
 			510, 230, 150, 55,
 			hWnd, (HMENU)BAUDResultButtonID, NULL, NULL);
+
 		//result is already there
-		BAUDBox = CreateWindow(TEXT("edit"), TEXT("resultat"),
+		BAUDBox = CreateWindow(TEXT("edit"), TEXT(resultText),
 			WS_VISIBLE | WS_BORDER | WS_CHILD | ES_NUMBER,
 			810, 230, 100, 25,
 			hWnd, (HMENU)BAUDID, NULL, NULL);
