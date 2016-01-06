@@ -155,18 +155,24 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	int wmId, wmEvent;
+	int wmId, wmEvent, width, height;
 	PAINTSTRUCT ps;
 	HDC hdc;
+	RECT rect;
 
 	switch (message)
 	{
 	case WM_CREATE:{
 
+		if (GetWindowRect(hWnd, &rect)){
+			width = rect.right - rect.left;
+			height = rect.bottom - rect.top;
+		}
+
 		//titel
 		CreateWindow(TEXT("STATIC"), TEXT("MSYS Calculator"), // Static er tekst, det næste er beskeden
-			WS_VISIBLE | WS_CHILD,                            //
-			0, 0, 200, 25,                                  //x,y, width height
+			WS_VISIBLE | WS_CHILD | SS_CENTER,                            //
+			0, 0, width, 25,                                  //x,y, width height
 			hWnd, (HMENU)NULL, NULL, NULL);
 
 
@@ -210,13 +216,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 
 		//sæt 4
-		CreateWindow(TEXT("STATIC"), TEXT("Delay (float)"),
+		CreateWindow(TEXT("STATIC"), TEXT("Delay (Skrives kun nævner)"),
 			WS_VISIBLE | WS_CHILD | SS_CENTER,
 			380, 70, 80, 25,
 			hWnd, (HMENU)NULL, NULL, NULL);
 
 		delayBox = CreateWindow(TEXT("EDIT"), TEXT("Skriv delay"),
-			WS_VISIBLE | WS_CHILD | WS_BORDER,
+			WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
 			380, 100, 80, 25,
 			hWnd, (HMENU)delayID, NULL, NULL);
 
@@ -241,7 +247,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		outputBox = CreateWindow(TEXT("EDIT"), TEXT(resultText),
 			WS_VISIBLE | WS_CHILD | WS_BORDER,
-			610 + 200, 85, 70, 25,
+			610 + 200, 85, 120, 25,
 			hWnd, (HMENU)outputID, NULL, NULL);
 
 
@@ -344,14 +350,31 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case resultButtonID: //hvis der er trykket på knappen
 		{
 
-			int maxForTimer, cpuFreq, delayPrescaler, delay;
+			int maxForTimer, cpuFreq, delayPrescaler, delay, maxForTimerLength, cpuFreqLength, delayPrescalerLength, delayLength;
+
+			//Get an int to represent how many characters inserted in the box, used later for checking if empty
+			maxForTimerLength = SendMessage(maxForTimerBox, WM_GETTEXTLENGTH, 0,0);
+			cpuFreqLength = SendMessage(cpuFreqBox, WM_GETTEXTLENGTH, 0, 0);
+			delayPrescalerLength = SendMessage(delayPrescalerBox, WM_GETTEXTLENGTH, 0, 0);
+			delayLength = SendMessage(delayBox, WM_GETTEXTLENGTH, 0, 0);
+
+			//check if boxes is empty before calculating
+			if (maxForTimerLength == 0 || cpuFreqLength == 0 || delayPrescalerLength == 0 || delayLength == 0){
+				MessageBox(0, L"Du mangler at indtaste en af de fire parametre!", 0, 0);
+				break;
+			}
 
 			maxForTimer = GetDlgItemInt(hWnd, maxForTimerID, NULL, true);
 			cpuFreq = GetDlgItemInt(hWnd, cpuFreqID, NULL, true);
 			delayPrescaler = GetDlgItemInt(hWnd, delayPrescalerID, NULL, true);
 			delay = GetDlgItemInt(hWnd, delayID, NULL, true);
 
-			float resX = (float)((maxForTimer + 1) - (cpuFreq*delay)) / delayPrescaler;
+			float delayFloat = (float)1/delay;
+			
+			float resXPart1 = (float)maxForTimer + 1;
+			long float resXPart2 = (float)(cpuFreq*delayFloat) / delayPrescaler;
+			float resX = (float)resXPart1 - resXPart2;
+
 
 			std::wostringstream woss;
 
